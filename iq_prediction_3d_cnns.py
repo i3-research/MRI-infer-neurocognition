@@ -19,7 +19,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def parse_options():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--arch', type=str, choices=['resnet', 'densenet'])
+    parser.add_argument('--arch', type=str, choices=['resnet18', 'resnet50', 'densenet121', 'densenet169'])
     parser.add_argument('--im_type', type=str, choices=['int', 'rav', 'int_rav'])
     parser.add_argument('--iq', type=str, choices=['all', 'fiq', 'viq', 'piq'])
     parser.add_argument('--iq_type', type=str, choices=['absolute', 'residual'])
@@ -509,11 +509,15 @@ def main():
     val_ds = ImageDataset(image_files=validation_image, labels=validation_label, transform=val_transforms)
     val_loader = DataLoader(val_ds, batch_size=1, num_workers=1, pin_memory=pin_memory)
     
-    # Create DenseNet121/ResNet18, MSELoss and Adam optimizer
-    if opts.arch == 'densenet':
+    # Create DenseNet121/169, ResNet18/50, MSELoss and Adam optimizer
+    if opts.arch == 'densenet121':
         model = densenet121(spatial_dims=3, in_channels=1, out_channels=no_out_classes).to(device)
-    elif opts.arch == 'resnet':
+    elif opts.arch == 'densenet169':
+        model = densenet169(spatial_dims=3, in_channels=1, out_channels=no_out_classes).to(device)
+    elif opts.arch == 'resnet18':
         model = generate_model(model_depth=18, n_input_channels=1, n_classes=no_out_classes, shortcut_type='B').to(device)
+    elif opts.arch == 'resnet50':
+        model = generate_model(model_depth=50, n_input_channels=1, n_classes=no_out_classes, shortcut_type='B').to(device)
         
     loss_function = torch.nn.L1Loss()
     optimizer = torch.optim.Adam(model.parameters(), 1e-3)
