@@ -37,7 +37,13 @@ We used [MONAI](https://github.com/Project-MONAI/MONAI) framework for our 3D CNN
 In our experiements, we generated a list for NIFTI data and associated ground truth scores as below:
 ```
 [patient_id absolute_FIQ residual_FIQ absolute_PIQ residual_PIQ absolute_VIQ residual_VIQ sex diagnosis age path site_id]
-
+```
+For example:
+```
+51493 102 -13 103 -8 101 -13 2 2 29.2 /neuro/labs/grantlab/research/MRI_Predict_Age/ABIDE/2NIFTI_SS_SEG_RAVENS/ABIDE51493/reg_ABIDE51493_MPRAGE_ss_to_SRIatlas.nii.gz 1
+50642 103 -7 107 -3 98 -9 1 1 33.0 /neuro/labs/grantlab/research/MRI_Predict_Age/ABIDE/2NIFTI_SS_SEG_RAVENS/ABIDE50642/reg_ABIDE50642_MPRAGE_ss_to_SRIatlas.nii.gz 2
+...
+...
 ```
 
 #### 2D CNNs
