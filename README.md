@@ -45,6 +45,8 @@ For example:
 ...
 ...
 ```
+Users should change the data reading parts in ```2d_cnn\iq_prediction_2d_cnn.py``` and ```3d_cnn\iq_prediction_3d_cnn.py``` depending on their own generated data list.
+
 
 #### 2D CNNs
 To train 2D CNNs (i.e., ResNet18 and VGG8) in a 5-fold cross-validation setup, run ```2d_cnn\iq_prediction_2d_cnn.py``` as:
