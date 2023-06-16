@@ -47,7 +47,21 @@ For example:
 ```
 
 #### 2D CNNs
-To train 2D CNNs (i.e., ResNet18 and VGG8) in a 5-fold cross-validation setup, run ```2d_cnn\iq_prediction_2d_cnn.py```.  
+To train 2D CNNs (i.e., ResNet18 and VGG8) in a 5-fold cross-validation setup, run ```2d_cnn\iq_prediction_2d_cnn.py``` as:
+```
+python -m iq_prediction_2d_cnn.py <architecture> --im_type <input type> --n_slices <no of slices> --iq <IQ to be predicted> -- iq_type <absolute or residual>
+```
+Options are available in ```2d_cnn\iq_prediction_2d_cnn.py``` as:
+```
+parser.add_argument('arch', type=str, choices=['resnet18', 'vgg8'])
+parser.add_argument('--im_type', type=str, choices=['int', 'rav', 'int_rav'])
+parser.add_argument('--n_slices', type=int, default=130, help='number of slices')
+parser.add_argument('--iq', type=str, choices=['all', 'fiq', 'viq', 'piq'])
+parser.add_argument('--iq_type', type=str, choices=['absolute', 'residual'])
+```
+
+To generate GradCAM images, use ```2d_cnn\iq_inference_resnet18_vgg8_gradcam.ipynb```.
+
 
 We also shared the code for the key algorithm (that runs inside the training loop) in ```mymodule\alnt.py```. 
 - This code can be plugged into any training routine, after modifying lines 13 and 40 to load someone's own deep model. 
