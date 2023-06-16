@@ -33,6 +33,15 @@ We used [MONAI](https://github.com/Project-MONAI/MONAI) framework for our 3D CNN
 
 <a name="usage"></a>
 ### Usage
+#### Data List Preparation
+In our experiements, we generated a list for NIFTI data and associated ground truth scores as below:
+```
+[patient_id absolute_FIQ residual_FIQ absolute_PIQ residual_PIQ absolute_VIQ residual_VIQ sex diagnosis age path site_id]
+
+```
+
+#### 2D CNNs
+
 We also shared the code for the key algorithm (that runs inside the training loop) in ```mymodule\alnt.py```. 
 - This code can be plugged into any training routine, after modifying lines 13 and 40 to load someone's own deep model. 
 - To run as RGS method, assign ```alpha = 1``` in line 127 
