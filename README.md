@@ -7,24 +7,18 @@ This is the code repository for our [paper](#cite) titled "[Can deep learning pr
 ## Repository layout
 ```
 |- 2d_cnn    # Source codes of 2D CNN-based IQ prediction approach
-|- 3d_cnn    # Source codes of 2D CNN-based IQ prediction approach (requires [MONAI](https://github.com/Project-MONAI/MONAI) installation) 
+|- 3d_cnn    # Source codes of 2D CNN-based IQ prediction approach (requires MONAI [https://github.com/Project-MONAI/MONAI] installation) 
 ```
 
 ## Motivation
 
-- Although supervised deep learning has become a standard approach to solving medical image segmentation tasks, serious difficulties in attaining voxel-level annotations for sufficiently large volumetric datasets in real-life applications have highlighted the critical need for alternative approaches, such as semi-supervised learning.
-- Most of the semi-supervised approaches combine expert annotations and machine-generated annotations with equal weights within deep model training, despite the latter annotations being relatively unreliable and likely to affect model optimization negatively. 
-- To overcome this, we propose an active learning approach that uses an example re-weighting strategy, where machine-annotated samples are weighted (i) based on the similarity of their gradient directions of descent to those of expert-annotated data, and (ii) based on the gradient magnitude of the last layer of the deep model. 
-
-![](images/Fig.png)
+- T1-weighted structural brain magnetic resonance images (sMRI) have been correlated with intelligence. 
+- Nevertheless, population-level association does not fully account for individual variability in intelligence. 
+- To address this, individual prediction studies emerge recently. However, they are mostly on predicting fluid intelligence (the ability to solve new problems). 
+- Studies are lacking to predict crystallized intelligence (the ability to accumulate knowledge) or general intelligence (fluid and crystallized intelligence combined). 
 
 ## Brief Description of the Method
-We design the working pipeline of the proposed method using the following steps: 
-1. Initially, we generate voxel-level annotations (pseudo annotation) using supervised deep models (step 1 in figure above) while considering the fact that these machine-generated annotations are less reliable (noisy teacher) than human expert annotations (step 2 in figure above). 
-2. Then we generate a relative weight based on gradients per sample based on its "trustworthiness" during training. A sample weight is estimated from the similarity of the gradient directions between the annotation-free sample data and the expert-annotated validation data (step 3 in figure above).
-3. As the primary aim of an active learning algorithm is to identify and label only maximally-informative samples, gradient similarity-based sample weighting may lead to underestimation of a more diversely informative data sample. On the other hand, gradient magnitude with respect to parameters in the final CNN layer can be used as a measure of a model’s uncertainty. The higher magnitude of the gradient of the last layer, resulting from a higher loss of training, implies that the interrogated training sample contains newer information that the model has not yet seen. In our proposed approach, we adopt this gradient magnitude-based strategy and generate another set of sample weights based on their "informativeness" during training (step 3 in figure above).
-4. Afterwards, we generate an overall sample weight by combining the "trustworthiness" and "informativeness" sample weights. 
-5. Finally, we use a query mechanism to choose more informative and trustworthy samples in a batch of annotation-free data by rectification (i.e., choosing more useful data in a batch) of the combined sample weight, and subsequently use these combined sample weights in the batch during the model optimization.
+We trained two 2D and four 3D deep CNNs using T1-weighted MRI volumes (N = 850) in two settings. In the first setting, we used intensity (i.e., contrast channel) and RAVENS (regional analysis of volumes examined in normalized space; i.e., morphometry channel) images to predict three IQ scores separately (i.e., FSIQ or PIQ, or VIQ). On the other hand, we used intensity and RAVENS maps to predict three IQ scores simultaneously (i.e., FSIQ and PIQ, and VIQ) in the second setting. For 2D CNNs, we chose a different number of axial slices (n = [5, 10, 20, 40, 70, 100, 130]) as channels.
 
 ## Table of contents
 1. [Installation](#installation)
@@ -34,7 +28,7 @@ We design the working pipeline of the proposed method using the following steps:
 
 <a name="installation"></a>
 ### Installation
-We used [MONAI](https://github.com/Project-MONAI/MONAI) framework for our experiments. To run ```scripts\train.py```, MONAI installation is required. Detailed instructions on how to install MONAI can be found [here](https://docs.monai.io/en/latest/installation.html).  
+We used [MONAI](https://github.com/Project-MONAI/MONAI) framework for our 3D CNN-based experiments. To run ```3d_cnn\3d_cnns_GradCAM.ipynb.py``` and ```3d_cnn\iq_prediction_3d_cnns.py```, MONAI installation is required. Detailed instructions on how to install MONAI can be found [here](https://docs.monai.io/en/latest/installation.html).  
 
 
 <a name="usage"></a>
