@@ -47,6 +47,7 @@ For example:
 ```
 
 #### 2D CNNs
+To train 2D CNNs (i.e., ResNet18 and VGG8) in a 5-fold cross-validation setup, run ```2d_cnn\iq_prediction_2d_cnn.py```.  
 
 We also shared the code for the key algorithm (that runs inside the training loop) in ```mymodule\alnt.py```. 
 - This code can be plugged into any training routine, after modifying lines 13 and 40 to load someone's own deep model. 
