@@ -63,24 +63,31 @@ parser.add_argument('--iq_type', type=str, choices=['absolute', 'residual'])
 To generate GradCAM images, use ```2d_cnn\iq_inference_resnet18_vgg8_gradcam.ipynb```.
 
 
-We also shared the code for the key algorithm (that runs inside the training loop) in ```mymodule\alnt.py```. 
-- This code can be plugged into any training routine, after modifying lines 13 and 40 to load someone's own deep model. 
-- To run as RGS method, assign ```alpha = 1``` in line 127 
-- To run as RGM method, assign ```alpha = 0``` in line 127
-- To run as RGS&M method, assign ```alpha = 0.5``` in line 127
-- To run as RGS&M+AL method, uncomment line 128
-- To find the gradient with respect to the last layer weights (for RGM, RGS&M, RGS&M+AL), find and replace the name of the last layer of your own model in line 68.
+#### 3D CNNs
+To train 3D CNNs (i.e., ResNet18, ResNet50, DenseNet121, and DenseNet169) in a 5-fold cross-validation setup, run ```3d_cnn\iq_prediction_3d_cnn.py``` as:
+```
+python iq_prediction_3d_cnn.py --arch <architecture> --im_type <input type> --iq <IQ to be predicted> -- iq_type <absolute or residual> --folds <fold number>
+```
+Options are available in ```3d_cnn\iq_prediction_3d_cnn.py``` as:
+```
+parser.add_argument('--arch', type=str, choices=['resnet18', 'resnet50', 'densenet121', 'densenet169'])
+parser.add_argument('--im_type', type=str, choices=['int', 'rav', 'int_rav'])
+parser.add_argument('--iq', type=str, choices=['all', 'fiq', 'viq', 'piq'])
+parser.add_argument('--iq_type', type=str, choices=['absolute', 'residual'])
+parser.add_argument('--folds', type=int, default=0, help='fold number')
+```
+
+To generate GradCAM images, use ```3d_cnn\3d_cnns_GradCAM.ipynb```.
 
 <a name="cite"></a>
 ### Cite
 ```bibtext
-@article{hussain2022active,
-  title={Active deep learning from a noisy teacher for semi-supervised 3D image segmentation: Application to COVID-19 pneumonia infection in CT},
-  author={Hussain, Mohammad Arafat and Mirikharaji, Zahra and Momeny, Mohammad and Marhamati, Mahmoud and Neshat, Ali Asghar and Garbi, Rafeef and Hamarneh, Ghassan},
-  journal={Computerized Medical Imaging and Graphics},
-  doi = {10.1016/j.compmedimag.2022.102127},
-  pages={102127},
-  year={2022},
-  publisher={Elsevier}
+@article{hussain2023can,
+  title={Can deep learning predict human intelligence from structural brain MRI?},
+  author={Hussain, Mohammad Arafat and LaMay, Danielle and Grant, Ellen and Ou, Yangming},
+  journal={bioRxiv},
+  pages={2023--02},
+  year={2023},
+  publisher={Cold Spring Harbor Laboratory}
 }
 ```
